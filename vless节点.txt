@@ -1,1 +1,2 @@
-vless://b6474bd4-64b0-4132-b389-9b51e3953960@104.26.7.41:80?encryption=none&security=none&sni=qjm01.vcb3id43.workers.dev&fp=randomized&type=ws&host=qjm01.vcb3id43.workers.dev&path=%2F%3Fed%3D2048#qjm01.vcb3id43.workers.dev
+vless://b6474bd4-64b0-4132-b389-9b51e3953960@172.64.138.101:80?encryption=none&security=none&sni=qjm1.vcb3id43.workers.dev&fp=randomized&type=ws&host=qjm1.vcb3id43.workers.dev&path=%2F%3Fed%3D2048#qjm1.vcb3id43.workers.dev
+vless://e9797012-af05-4697-8d6c-57bf55ec734a@172.64.18.114:80?encryption=none&security=none&sni=qjm2.vcb3id43.workers.dev&fp=randomized&type=ws&host=qjm2.vcb3id43.workers.dev&path=%2F%3Fed%3D2048#qjm2.vcb3id43.workers.dev
