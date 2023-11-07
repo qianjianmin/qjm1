@@ -1,0 +1,530 @@
+proxies:
+  - {name: qjm01, server: 172.67.190.226, port: 443, client-fingerprint: randomized, type: vless, uuid: 26a4e909-801b-4639-890f-eb7ffe7dbf17, tls: true, tfo: false, servername: z0.jianmin.eu.org, skip-cert-verify: false, network: ws, ws-opts: {path: "/?ed=2048", headers: {Host: z0.jianmin.eu.org}}}
+  - {name: qjm02, server: 172.64.141.101, port: 443, client-fingerprint: randomized, type: vless, uuid: 1a67711a-024f-4349-bc57-14d382f1523e, tls: true, tfo: false, servername: z1.jianmin.eu.org, skip-cert-verify: false, network: ws, ws-opts: {path: "/?ed=2048", headers: {Host: z1.jianmin.eu.org}}}
+  - {name: qjm03, server: 172.64.171.1, port: 443, client-fingerprint: randomized, type: vless, uuid: 1c5ea1bd-7f53-456a-8143-bc78d7646409, tls: true, tfo: false, servername: z2.jianmin.eu.org, skip-cert-verify: false, network: ws, ws-opts: {path: "/?ed=2048", headers: {Host: z2.jianmin.eu.org}}}
+  - {name: qjm04, server: 172.64.81.28, port: 443, client-fingerprint: randomized, type: vless, uuid: 7d95594c-61cb-400a-8827-2bb7a77acfc1, tls: true, tfo: false, servername: z3.jianmin.eu.org, skip-cert-verify: false, network: ws, ws-opts: {path: "/?ed=2048", headers: {Host: z3.jianmin.eu.org}}}
+  - {name: qjm05, server: 172.64.143.209, port: 443, client-fingerprint: randomized, type: vless, uuid: 44e14e74-c7a4-4db9-8321-56ddb1dae114, tls: true, tfo: false, servername: z4.jianmin.eu.org, skip-cert-verify: false, network: ws, ws-opts: {path: "/?ed=2048", headers: {Host: z4.jianmin.eu.org}}}
+  - {name: qjm06, server: 2a06:98c1:56:c07f:4cb6:e85d:8f3a:ec5c, port: 443, client-fingerprint: randomized, type: vless, uuid: 26a4e909-801b-4639-890f-eb7ffe7dbf17, tls: true, tfo: false, servername: z0.jianmin.eu.org, skip-cert-verify: false, network: ws, ws-opts: {path: "/?ed=2048", headers: {Host: z0.jianmin.eu.org}}}
+  - {name: qjm07, server: 2606:4700:9b00:455a:e8c7:efa2:1970:b875, port: 443, client-fingerprint: randomized, type: vless, uuid: 1a67711a-024f-4349-bc57-14d382f1523e, tls: true, tfo: false, servername: z1.jianmin.eu.org, skip-cert-verify: false, network: ws, ws-opts: {path: "/?ed=2048", headers: {Host: z1.jianmin.eu.org}}}
+  - {name: qjm08, server: 2606:4700:9c6b:aedd:6d3f:4d9d:3c15:903, port: 443, client-fingerprint: randomized, type: vless, uuid: 1c5ea1bd-7f53-456a-8143-bc78d7646409, tls: true, tfo: false, servername: z2.jianmin.eu.org, skip-cert-verify: false, network: ws, ws-opts: {path: "/?ed=2048", headers: {Host: z2.jianmin.eu.org}}}
+  - {name: qjm09, server: 2606:4700:9add:102f:a46f:6e39:67c5:e5dd, port: 443, client-fingerprint: randomized, type: vless, uuid: 7d95594c-61cb-400a-8827-2bb7a77acfc1, tls: true, tfo: false, servername: z3.jianmin.eu.org, skip-cert-verify: false, network: ws, ws-opts: {path: "/?ed=2048", headers: {Host: z3.jianmin.eu.org}}}
+  - {name: qjm10, server: 2a06:98c1:56:2262:32fa:489c:dd:6d0c, port: 443, client-fingerprint: randomized, type: vless, uuid: 44e14e74-c7a4-4db9-8321-56ddb1dae114, tls: true, tfo: false, servername: z4.jianmin.eu.org, skip-cert-verify: false, network: ws, ws-opts: {path: "/?ed=2048", headers: {Host: z4.jianmin.eu.org}}}
+proxy-groups:
+  - name: 🎯 总模式
+    type: select
+    proxies:
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - DIRECT
+  - name: Ⓜ️ 延迟最低
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 100
+    proxies:
+      - qjm01
+      - qjm02
+      - qjm03
+      - qjm04
+      - qjm05
+      - qjm06
+      - qjm07
+      - qjm08
+      - qjm09
+      - qjm10
+  - name: Ⓜ️ 故障切换
+    type: fallback
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    proxies:
+      - qjm01
+      - qjm02
+      - qjm03
+      - qjm04
+      - qjm05
+      - qjm06
+      - qjm07
+      - qjm08
+      - qjm09
+      - qjm10
+  - name: Ⓜ️ 负载均衡
+    type: load-balance
+    strategy: consistent-hashing
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    proxies:
+      - qjm01
+      - qjm02
+      - qjm03
+      - qjm04
+      - qjm05
+      - qjm06
+      - qjm07
+      - qjm08
+      - qjm09
+      - qjm10
+  - name: ♻️ 手动切换
+    type: select
+    proxies:
+      - qjm01
+      - qjm02
+      - qjm03
+      - qjm04
+      - qjm05
+      - qjm06
+      - qjm07
+      - qjm08
+      - qjm09
+      - qjm10
+      - REJECT
+  - name: ♻️ 手动切换1
+    type: select
+    proxies:
+      - qjm01
+      - qjm02
+      - qjm03
+      - qjm04
+      - qjm05
+      - qjm06
+      - qjm07
+      - qjm08
+      - qjm09
+      - qjm10
+      - DIRECT
+      - REJECT
+  - name: ♻️ 手动切换2
+    type: select
+    proxies:
+      - qjm01
+      - qjm02
+      - qjm03
+      - qjm04
+      - qjm05
+      - qjm06
+      - qjm07
+      - qjm08
+      - qjm09
+      - qjm10
+      - DIRECT
+      - REJECT
+  - name: ♻️ 手动切换3
+    type: select
+    proxies:
+      - qjm01
+      - qjm02
+      - qjm03
+      - qjm04
+      - qjm05
+      - qjm06
+      - qjm07
+      - qjm08
+      - qjm09
+      - qjm10
+      - DIRECT
+      - REJECT
+  - name: ♻️ 手动切换4
+    type: select
+    proxies:
+      - qjm01
+      - qjm02
+      - qjm03
+      - qjm04
+      - qjm05
+      - qjm06
+      - qjm07
+      - qjm08
+      - qjm09
+      - qjm10
+      - DIRECT
+      - REJECT
+  - name: ♻️ 手动切换5
+    type: select
+    proxies:
+      - qjm01
+      - qjm02
+      - qjm03
+      - qjm04
+      - qjm05
+      - qjm06
+      - qjm07
+      - qjm08
+      - qjm09
+      - qjm10
+      - DIRECT
+      - REJECT
+  - name: 🍎 苹果服务
+    type: select
+    proxies:
+      - DIRECT
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+  - name: 🧩 微软服务
+    type: select
+    proxies:
+      - DIRECT
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+  - name: 📲 聊天软件
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: 🤖 OpenAI
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: 📹 YouTube
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: 🎥 NETFLIX
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: 🎬 Prime
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: 🎬 ParamountPlus
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: 👪 DisneyPlus
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: 🎬 HBO
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: 🎬 Hulu USA
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: 🎬 Spotify
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: ⭐️ StarPlus
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: ⚽ DAZN
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: 🎼 TikTok
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: 📺 巴哈姆特
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: 📟 哔哩哔哩
+    type: select
+    proxies:
+      - DIRECT
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+  - name: 🎬 爱奇艺
+    type: select
+    proxies:
+      - DIRECT
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+  - name: 🔍 谷歌服务
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: 🎮 游戏平台
+    type: select
+    proxies:
+      - DIRECT
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+  - name: ⛩ 日韩媒体
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: 🌍 国外媒体
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: 🌏 港台媒体
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: 🇺🇳 国外网站
+    type: select
+    proxies:
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+      - DIRECT
+  - name: 🇨🇳 国内网站
+    type: select
+    proxies:
+      - DIRECT
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+  - name: 🐟 漏网之鱼
+    type: select
+    proxies:
+      - DIRECT
+      - 🎯 总模式
+      - Ⓜ️ 负载均衡
+      - Ⓜ️ 延迟最低
+      - Ⓜ️ 故障切换
+      - ♻️ 手动切换
+      - ♻️ 手动切换1
+      - ♻️ 手动切换2
+      - ♻️ 手动切换3
+      - ♻️ 手动切换4
+      - ♻️ 手动切换5
+  - name: 🛑 广告拦截
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
+  - name: ⛔ 应用净化
+    type: select
+    proxies:
+      - REJECT
+      - DIRECT
