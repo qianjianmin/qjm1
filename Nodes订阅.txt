@@ -1,7 +1,0 @@
-https://getinfo.bigwatermelon.org/api/v1/client/subscribe?token=1eb57b6081894af5e38cba2c1fa2a295
-https://sub.marsix.cc/api/v1/client/subscribe?token=70be3c0fa8c3d6b692f798597a0f297b
-https://sub.cfno1.eu.org/sub
-vless://56f4e490-db64-4dd3-8ab9-e005ccecc5bf@01.jianmin.eu.org:443?encryption=none&security=tls&sni=01.jianmin.eu.org&fp=randomized&type=ws&host=01.jianmin.eu.org&path=%2F%3Fed%3D2048#01.jianmin.eu.org
-vless://1ebdd7da-59e6-47f3-aae7-0751d8ca3c52@02.jianmin.eu.org:443?encryption=none&security=tls&sni=02.jianmin.eu.org&fp=randomized&type=ws&host=02.jianmin.eu.org&path=%2F%3Fed%3D2048#02.jianmin.eu.org
-vless://1e3c81b0-7d8c-4be9-bbe5-93225af9fd5a@03.jianmin.eu.org:443?encryption=none&security=tls&sni=03.jianmin.eu.org&fp=randomized&type=ws&host=03.jianmin.eu.org&path=%2F%3Fed%3D2048#03.jianmin.eu.org
-vless://56f686e8-fc43-45e6-861d-3792cd622f2b@04.jianmin.eu.org:443?encryption=none&security=tls&sni=04.jianmin.eu.org&fp=randomized&type=ws&host=04.jianmin.eu.org&path=%2F%3Fed%3D2048#04.jianmin.eu.org
